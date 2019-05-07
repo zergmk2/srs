@@ -7,13 +7,12 @@ ENV SRS_VERSION=${SRS_VERSION}
 ENV SRS_COMMIT=6e6e996bbaee73473f2ace76b7cb45a065368e7c
 ENV SRS_CONFIGURE_ARGS=
 
+COPY trunk/. /tmp
+
 RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends wget ca-certificates sudo python net-tools; \
     cd /tmp; \
-    wget https://github.com/ossrs/srs/archive/${SRS_COMMIT}.tar.gz; \
-    tar zxf ${SRS_COMMIT}.tar.gz; \
-    cd srs-${SRS_COMMIT}/trunk; \
     ./configure --prefix=/srs ${SRS_CONFIGURE_ARGS}; \
     make; \
     make install; \
